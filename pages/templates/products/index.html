@@ -2,18 +2,46 @@
 {% extends 'pages/base.html' %}
 {% block title %} {{title}} {% endblock %}
 {% block header_title %} {{subtitle}} {% endblock %}
+
 {% block content %}
-<div class="row">
-     {% for product in products %}
-     <div class="col-md-4 col-lg-3 mb-2">
-         <div class="card">
-             <img src="https://static.djangoproject.com/img/logos/django-logo-positive.svg" class="card-img-top img-card">
-             <div class="card-body text-center">
-                 <a href="{% url 'show' id=product.id %}"
-                     class="btn bg-primary text-white">{{product.name}}</a>
-             </div>
-         </div>
-     </div>
-     {% endfor %}
-</div>
-{% endblock %}
+<div class="container">
+     <div class="row justify-content-center">
+         <div class="col-md-12"> 
+         <h1>Available products</h1> 
+         <ul> 
+              {% for key, product in products.items %} 
+                 <li> 
+                     Id: {{ key }} -
+                     Name: {{ product.name }} -
+                     Price: {{ product.price }} -
+                     <form method="post" action="{% url 'cart_add' key %}"> 
+                         {% csrf_token %} 
+                         <button type="submit">Add product to cart</button>
+                     </form> 
+                 </li> 
+             {% endfor %} 
+         </ul>
+         </div> 
+     </div> 
+ <div class="row justify-content-center"> 
+     <div class="col-md-12"> 
+     <h1>Products in cart</h1>
+         <ul> 
+             {% for key, product in cart_products.items %}
+             
+                 <li>
+                     Id: {{ key }} -
+                     Name: {{ product.name }} - 
+                     Price: {{ product.price }} 
+                 </li> 
+             {% endfor %} 
+         </ul>
+         <form method="post" action="{% url 'cart_removeAll' %}"> 
+             {% csrf_token %} 
+             <button type="submit">Remove all products from cart</button> 
+         </form> 
+     </div> 
+ </div> 
+ </div> 
+ {% endblock %}
+    

@@ -1,0 +1,17 @@
+{% extends 'pages/base.html' %}
+
+{% block title %} Upload Image {% endblock %}
+{% block header_title %} Upload Image {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Upload Image</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="image">Selecciona una imagen:</label>
+        <input type="file" name="image" id="image">
+        <button type="submit">Upload</button>
+    </form>
+</div>
+{% endblock %}
+
